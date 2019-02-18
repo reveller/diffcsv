@@ -1,0 +1,6 @@
+first,last,age,sex,xy,color,address,email
+fred,flintstone,43,Male,"23,45",blue,"1, bedrock avenue","fred@flintstone.com"
+wilma,flintstone,43,Female,"23,45",blue,"1, bedrock avenue",wilma@flintstone.com
+barney,rubble,43,Male,"23,45",blue,"1, bedrock avenue",barney@rubble.com
+betty,rubble,43,Female,"23,45",blue,"1, bedrock avenue",betty@rubble.com
+bambam,rubble,18,Male,"23,45",red,"2, bedrock avenue",bambam@rubble.com
