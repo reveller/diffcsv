@@ -20,11 +20,34 @@ def parse_file(fname, keyfield):
     # pprint.pprint(destdict)
     return destdict
 
+def blank_check(fname, keyfield):
+    with open(fname) as f:
+        reader = csv.DictReader(f)
+        headers = next(reader)
+        data1 = [r for r in reader]
+    # pprint.pprint(data1)
+
+    # import pdb; pdb.set_trace()
+    for row in data1:
+        if row[keyfield] == '':
+            if "Account Name" in headers:
+                acct = row["Account Name"]
+            else:
+                acct = row["ACCOUNT"]
+            print("Blank email entry for {} in {}".format(acct, fname))
+
+    
+
 def compare_dicts(source_file, src_dict, test_file, test_dict):
     for key in src_dict:
         # print("Comparing {}".format(key))
         if test_dict.get(key) is None:
-            print("{} exists in {}, but does NOT exist in {}!".format(key, source_file, test_file))
+            # import pdb; pdb.set_trace()
+            if src_dict[key].get("Account Name") is None:
+                acct = src_dict[key]["ACCOUNT"]
+            else:
+                acct = src_dict[key]["Account Name"]
+            print("{} ({}) exists in {}, but does NOT exist in {}!".format(key, acct, source_file, test_file))
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-k', '--key-field', help='Field name of the column to use as the key',
@@ -72,6 +95,9 @@ def main():
     if args.testFile is None:
         print("You gotta tell me which filename to compare the unique key field against!  Try -t")
         sys.exit(1)
+
+    src_list = blank_check(args.sourceFile, args.keyField)
+    test_list = blank_check(args.testFile, args.keyField)
 
     src_dict = parse_file(args.sourceFile, args.keyField)
     test_dict = parse_file(args.testFile, args.keyField)
